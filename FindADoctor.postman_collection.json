@@ -1,0 +1,535 @@
+{
+	"info": {
+		"_postman_id": "b442c26c-7bb9-4dec-91b7-9c8db0f35876",
+		"name": "FindADoctor",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12994573",
+		"_collection_link": "https://lively-crescent-615716.postman.co/workspace/YT~a326a064-a577-4ee9-aa33-58cd25d9f29d/collection/12994573-b442c26c-7bb9-4dec-91b7-9c8db0f35876?action=share&source=collection_link&creator=12994573"
+	},
+	"item": [
+		{
+			"name": "Doctors",
+			"item": [
+				{
+					"name": "Create Doctor",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"firstName\": \"\",\r\n  \"lastName\": \"\",\r\n  \"speciality\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{DOCTORS_URL}}/doctors",
+							"host": [
+								"{{DOCTORS_URL}}"
+							],
+							"path": [
+								"doctors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Doctor",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{DOCTORS_URL}}doctors/2a966c5c-e7ca-459d-b84e-fba7eb0a7864",
+							"host": [
+								"{{DOCTORS_URL}}doctors"
+							],
+							"path": [
+								"2a966c5c-e7ca-459d-b84e-fba7eb0a7864"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search Doctors",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{DOCTORS_URL}}/doctors",
+							"host": [
+								"{{DOCTORS_URL}}"
+							],
+							"path": [
+								"doctors"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Subsciption",
+			"item": [
+				{
+					"name": "Create Subscription",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"subscriptionType\": 2,\r\n  \"doctorId\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{DOCTORS_URL}}/subscriptions",
+							"host": [
+								"{{DOCTORS_URL}}"
+							],
+							"path": [
+								"subscriptions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Subscription",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{DOCTORS_URL}}/subscriptions/40aeadcd-6c89-4ba2-a2f7-5c2799dbbc03",
+							"host": [
+								"{{DOCTORS_URL}}"
+							],
+							"path": [
+								"subscriptions",
+								"40aeadcd-6c89-4ba2-a2f7-5c2799dbbc03"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Offices",
+			"item": [
+				{
+					"name": "Create Office",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"state\": \"\",\r\n  \"city\": \"\",\r\n  \"street\": \"\",\r\n  \"streetNumber\": \"\",\r\n  \"zipCode\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{DOCTORS_URL}}/doctors/199c4b48-7d55-4fee-9e21-6961749065e5/offices",
+							"host": [
+								"{{DOCTORS_URL}}"
+							],
+							"path": [
+								"doctors",
+								"199c4b48-7d55-4fee-9e21-6961749065e5",
+								"offices"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Offices",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{DOCTORS_URL}}/doctors/cad1e092-aa89-4a6b-8051-b992f262335b/offices",
+							"host": [
+								"{{DOCTORS_URL}}"
+							],
+							"path": [
+								"doctors",
+								"cad1e092-aa89-4a6b-8051-b992f262335b",
+								"offices"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Schedule",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"workingCalendar\": [\r\n    {\r\n      \"date\": \"2024-12-06T00:00:00\",\r\n      \"timeRange\": {\r\n        \"start\": \"2024-12-06T10:00:00\",\r\n        \"end\": \"2024-12-06T18:00:00\"\r\n      }\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{APPOINTMENTS_URL}}/offices/21c1e4bd-267f-4bf1-b3fb-979a93d814d9/schedule",
+							"host": [
+								"{{APPOINTMENTS_URL}}"
+							],
+							"path": [
+								"offices",
+								"21c1e4bd-267f-4bf1-b3fb-979a93d814d9",
+								"schedule"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Schedule",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{APPOINTMENTS_URL}}/offices/81ac20ec-a78e-4e8e-8600-31fab461e2c5/schedule",
+							"host": [
+								"{{APPOINTMENTS_URL}}"
+							],
+							"path": [
+								"offices",
+								"81ac20ec-a78e-4e8e-8600-31fab461e2c5",
+								"schedule"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Office",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{DOCTORS_URL}}/offices/f8deb217-b5fe-49aa-9d81-aef2d759e2b6",
+							"host": [
+								"{{DOCTORS_URL}}"
+							],
+							"path": [
+								"offices",
+								"f8deb217-b5fe-49aa-9d81-aef2d759e2b6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Office",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{DOCTORS_URL}}/offices/21c1e4bd-267f-4bf1-b3fb-979a93d814d9",
+							"host": [
+								"{{DOCTORS_URL}}"
+							],
+							"path": [
+								"offices",
+								"21c1e4bd-267f-4bf1-b3fb-979a93d814d9"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Identity",
+			"item": [
+				{
+					"name": "Register Doctor",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userName\": \"\",\r\n  \"email\": \"\",\r\n  \"password\": \"\",\r\n  \"firstName\": \"\",\r\n  \"lastName\" : \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{IDENTITY_URL}}/identity/register-doctor",
+							"host": [
+								"{{IDENTITY_URL}}"
+							],
+							"path": [
+								"identity",
+								"register-doctor"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"TOKEN\", pm.response.json().token)\r",
+									"pm.environment.set(\"REFRESH_TOKEN\", pm.response.json().refreshToken)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userName\": \"\",\r\n  \"password\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{IDENTITY_URL}}/identity/login",
+							"host": [
+								"{{IDENTITY_URL}}"
+							],
+							"path": [
+								"identity",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Token",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"token\": \"\",\r\n  \"refreshToken\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{IDENTITY_URL}}/identity/refresh-token",
+							"host": [
+								"{{IDENTITY_URL}}"
+							],
+							"path": [
+								"identity",
+								"refresh-token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register Patient",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userName\": \"\",\r\n  \"email\": \"\",\r\n  \"password\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{IDENTITY_URL}}/identity/register-patient",
+							"host": [
+								"{{IDENTITY_URL}}"
+							],
+							"path": [
+								"identity",
+								"register-patient"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Patients",
+			"item": [
+				{
+					"name": "Create Patient",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{APPOINTMENTS_URL}}/patients/create",
+							"host": [
+								"{{APPOINTMENTS_URL}}"
+							],
+							"path": [
+								"patients",
+								"create"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Appointmets",
+			"item": [
+				{
+					"name": "Book Appointment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"dateTime\": \"2024-12-06T10:00:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{APPOINTMENTS_URL}}/offices/21c1e4bd-267f-4bf1-b3fb-979a93d814d9/appointments",
+							"host": [
+								"{{APPOINTMENTS_URL}}"
+							],
+							"path": [
+								"offices",
+								"21c1e4bd-267f-4bf1-b3fb-979a93d814d9",
+								"appointments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel Appointment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{APPOINTMENTS_URL}}/appointments/ee79ed0c-8273-45a3-84fe-5260f2207e6f/cancel",
+							"host": [
+								"{{APPOINTMENTS_URL}}"
+							],
+							"path": [
+								"appointments",
+								"ee79ed0c-8273-45a3-84fe-5260f2207e6f",
+								"cancel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Appointment",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{APPOINTMENTS_URL}}/appointments/ee79ed0c-8273-45a3-84fe-5260f2207e6f",
+							"host": [
+								"{{APPOINTMENTS_URL}}"
+							],
+							"path": [
+								"appointments",
+								"ee79ed0c-8273-45a3-84fe-5260f2207e6f"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{TOKEN}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
