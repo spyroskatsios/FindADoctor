@@ -1,6 +1,6 @@
 ﻿namespace Doctors.Infrastructure.Settings;
 
-public class RabbitMQSettings
+public class RabbitMqSettings
 {
     public const string Section = "RabbitMQ";
 

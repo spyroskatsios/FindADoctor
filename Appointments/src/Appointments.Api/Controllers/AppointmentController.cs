@@ -1,4 +1,5 @@
-﻿using Appointments.Api.Mapping;
+﻿using Appointments.Api.Diagnostics;
+using Appointments.Api.Mapping;
 using Appointments.Application.Appointments.Commands;
 using Appointments.Application.Appointments.Queries;
 using Appointments.Application.Common.Interfaces;
@@ -23,6 +24,10 @@ public class AppointmentController : ApiController
     public async Task<IActionResult> Book(BookAppointmentRequest request, Guid officeId)
     {
         var result = await _mediator.Send(request.ToBookAppointmentCommand(officeId, _currentUserService.PatientId));
+        
+        if(!result.IsError)
+            ApplicationDiagnostics.AppointmentsBooked.Add(1);
+        
         return result.Match(
             appointment => CreatedAtAction(nameof(Get), new { appointmentId = appointment.Id.Value}, appointment.ToAppointmentResponse()),
             Problem);

@@ -1,9 +1,12 @@
-﻿using System.Text.Json;
+﻿using System.Diagnostics;
+using System.Text.Json;
 using Doctors.Application.Common.Events;
 using Doctors.Domain.DoctorAggregate;
 using Doctors.Infrastructure.Persistence;
 using FindADoctor.SharedKernel.IntegrationEvents;
 using MediatR;
+using OpenTelemetry;
+using OpenTelemetry.Context.Propagation;
 
 namespace Doctors.Infrastructure.IntegrationEvents;
 
@@ -31,10 +34,37 @@ public class OutboxWriterEventHandler : INotificationHandler<DomainEventNotifica
     
     private async Task AddOutboxIntegrationEventAsync(IntegrationEvent integrationEvent)
     {
+        var extractedContext = ExtractTelemetryContextForPersistence();
+        
         await _dbContext.OutboxIntegrationEvents.AddAsync(
             new OutboxIntegrationEvent(integrationEvent.GetType().Name,
-                JsonSerializer.Serialize(integrationEvent)));
+                JsonSerializer.Serialize(integrationEvent),
+                extractedContext));
 
         await _dbContext.SaveChangesAsync();
     }
+    
+    private static string? ExtractTelemetryContextForPersistence()
+    {
+        var activity = Activity.Current;
+
+        if (activity is null)
+            return null;
+
+        var extractedContext = new Dictionary<string, string>();
+
+        Propagators.DefaultTextMapPropagator.Inject(
+            new PropagationContext(activity.Context, Baggage.Current),
+            extractedContext,
+            InjectEntry);
+
+        return JsonSerializer.Serialize(extractedContext);
+        
+    }
+    
+    private static void InjectEntry(
+        Dictionary<string, string> extractedContext,
+        string key,
+        string value)
+        => extractedContext[key] = value;
 }

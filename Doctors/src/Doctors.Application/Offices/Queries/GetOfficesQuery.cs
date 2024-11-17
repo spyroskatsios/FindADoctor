@@ -1,4 +1,5 @@
 ﻿using Doctors.Application.Common.Interfaces;
+using Doctors.Domain.DoctorAggregate;
 using Doctors.Domain.OfficeAggregate;
 using ErrorOr;
 using MediatR;
@@ -19,10 +20,10 @@ public class GetOfficesQueryHandler : IRequestHandler<GetOfficesQuery, ErrorOr<L
 
     public async Task<ErrorOr<List<Office>>> Handle(GetOfficesQuery request, CancellationToken cancellationToken)
     {
-        if (!await _readDbContext.Doctors.AnyAsync(x => x.Id.Value == request.DoctorId, cancellationToken))
+        if (!await _readDbContext.Doctors.AnyAsync(x => x.Id == DoctorId.From(request.DoctorId), cancellationToken))
             return Error.NotFound(description: "Doctor not found");
 
-        return await _readDbContext.Offices.Where(x => x.DoctorId.Value == request.DoctorId)
+        return await _readDbContext.Offices.Where(x => x.DoctorId == DoctorId.From(request.DoctorId))
             .ToListAsync(cancellationToken);
     }
 }

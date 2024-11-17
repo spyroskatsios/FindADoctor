@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Diagnostics;
+using System.Text;
 using System.Text.Json;
 using Appointments.Application.Common.Interfaces;
 using Appointments.Infrastructure.Persistence;
@@ -9,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using OpenTelemetry;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using Throw;
@@ -77,6 +79,20 @@ public class ConsumeIntegrationEventsBackgroundService : IHostedService
 
         try
         {
+            
+            var parentContext = RabbitMqDiagnostics.Propagator.Extract(default,
+                eventArgs.BasicProperties,
+                ExtractTraceContextFromBasicProperties);
+            Baggage.Current = parentContext.Baggage;
+            
+            const string operation = "process";
+            var activityName = $"{eventArgs.RoutingKey} {operation}";
+
+            using var activity = RabbitMqDiagnostics.ActivitySource.StartActivity(activityName, ActivityKind.Consumer,
+                parentContext.ActivityContext);
+            
+            SetActivityContext(activity, eventArgs.RoutingKey, operation);
+            
             _logger.LogInformation("Received integration event. Reading message from queue.");
 
             using var scope = _serviceScopeFactory.CreateScope();
@@ -94,7 +110,7 @@ public class ConsumeIntegrationEventsBackgroundService : IHostedService
             var dispatcher = scope.ServiceProvider.GetRequiredService<IIntegrationEventDispatcher>();
             await dispatcher.DispatchAsync(integrationEvent);
 
-            _logger.LogInformation("Integration event published in Gym Management service successfully. Sending ack to message broker.");
+            _logger.LogInformation("Integration event published successfully. Sending ack to message broker.");
 
             _channel.BasicAck(eventArgs.DeliveryTag, multiple: false);
         }
@@ -115,5 +131,26 @@ public class ConsumeIntegrationEventsBackgroundService : IHostedService
         _cts.Cancel();
         _cts.Dispose();
         return Task.CompletedTask;
+    }
+    
+    private static void SetActivityContext(Activity? activity, string eventName, string operation)
+    {
+        if (activity is null)
+            return;
+        
+        activity.SetTag(RabbitMqTags.MessagingSystem, "rabbitmq");
+        activity.SetTag(RabbitMqTags.MessagingDestinationName, "queue");
+        activity.SetTag(RabbitMqTags.MessagingOperation, operation);
+        activity.SetTag(RabbitMqTags.MessagingDestinationKind, eventName);
+    }
+    
+    private static IEnumerable<string> ExtractTraceContextFromBasicProperties(IBasicProperties props, string key)
+    {
+        if (!props.Headers.TryGetValue(key, out var value)) 
+            return [];
+
+        var bytes = value as byte[];
+        
+        return [Encoding.UTF8.GetString(bytes!)];
     }
 }

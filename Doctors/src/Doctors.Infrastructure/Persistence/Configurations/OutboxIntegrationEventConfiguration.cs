@@ -14,5 +14,7 @@ public class OutboxIntegrationEventConfiguration : IEntityTypeConfiguration<Outb
         builder.Property(x => x.EventName);
         
         builder.Property(x => x.EventContent);
+
+        builder.Property(x => x.ActivityExtractedContext);
     }
 }

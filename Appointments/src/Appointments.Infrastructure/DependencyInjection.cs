@@ -49,7 +49,6 @@ public static class DependencyInjection
     private static IServiceCollection AddBackgroundServices(this IServiceCollection services)
     {
         services.AddHostedService<ConsumeIntegrationEventsBackgroundService>();
-        services.AddHostedService<PublishIntegrationEventsBackgroundService>();
 
         return services;
     }
@@ -102,7 +101,6 @@ public static class DependencyInjection
     {
         services.AddScoped<IEventDispatcher, EventDispatcher>();
         services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
-        services.AddSingleton<IIntegrationEventsPublisher, IntegrationEventsPublisher>();
         services.AddScoped<IIntegrationEventDispatcher, IntegrationEventDispatcher>();
         
         return services;

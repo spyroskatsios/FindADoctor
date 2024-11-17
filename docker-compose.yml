@@ -1,10 +1,60 @@
-version: '3'
 services:
   rabbitmq:
-    image: rabbitmq:management
+    image: rabbitmq:3-management
     ports:
       - "5672:5672" # RabbitMQ default port
       - "15672:15672" # RabbitMQ management UI
     environment:
       RABBITMQ_DEFAULT_USER: guest
       RABBITMQ_DEFAULT_PASS: guest
+
+  jaeger:
+    image: jaegertracing/all-in-one:1.58.0
+    ports:
+      - "16686:16686" # Jaeger Web UI
+        
+  prometheus:
+    image: prom/prometheus:v2.53.0
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+        
+        
+        
+  grafana:
+    image: grafana/grafana:10.4.4
+    volumes:
+      - ./grafana-datasources.yml:/etc/grafana/provisioning/datasources/datasources.yml
+    environment:
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: "Admin"
+    ports:
+      - "3000:3000"
+
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:0.103.0
+    volumes:
+      - ./otel-collector/otel-collector-config.yml:/etc/otel/config.yaml
+      - ./log:/log/otel
+    command: --config /etc/otel/config.yaml
+    environment:
+      JAEGER_ENDPOINT: "jaeger:4317"
+    ports:
+      - "8889:8889"   # Prometheus metrics exporter (scrape endpoint)
+      - "13133:13133" # health_check extension
+      - "55679:55679" # ZPages extension
+      - "4317:4317"   # OTLP Receiver
+    depends_on:
+      - jaeger
+      - prometheus
+      - loki
+        
+        
+  loki:
+    image: grafana/loki:2.7.1
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml

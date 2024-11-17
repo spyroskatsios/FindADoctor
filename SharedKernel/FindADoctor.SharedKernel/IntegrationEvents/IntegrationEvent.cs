@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Diagnostics;
+using System.Text.Json.Serialization;
 using MediatR;
 
 namespace FindADoctor.SharedKernel.IntegrationEvents;

@@ -6,7 +6,7 @@ In this "demo" application you can explore concepts and tools like:
 <br/>
 <br/>
 Domain Driven Design, Eventual Consistency, Bounded Contexts, Aggregates, Domain & Integration Events, Clean Architecture, CQRS, Microservices, JWT Authentication with Refresh Tokens, Asynchronous Messaging, 
-RabbitMQ, Unit Testing, Integration Testing, Subcutaneous Testing, Test Containers, GitHub Actions and more.
+RabbitMQ, Open Telemetry, Unit Testing, Integration Testing, Subcutaneous Testing, Test Containers, Jaeger, Loki, Grafana, Prometheus, GitHub Actions and more.
 <br/>
 <br/>
 All services are contained within the same solution for easier navigation, but they can be deployed independently.
@@ -176,7 +176,10 @@ When a doctor deletes an office, the office is deleted (soft delete) in the Doct
 An Integration Event is published, triggering the Appointments Service to delete the office and cancel all related appointments through a Domain Event.
 
 ## Docker Compose
-A Docker Compose file is available in the project root to run RabbitMQ.
+A Docker Compose file is available in the project root to run RabbitMQ, Jaeger, Grafana and the Open Telemetry Collector.
+
+## Open Telemetry
+The application utilizes OpenTelemetry for comprehensive observability, including distributed tracing, metrics, and logging. 
 
 ## GitHub Actions
 

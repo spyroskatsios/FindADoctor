@@ -45,6 +45,8 @@ public class EventualConsistencyMiddleware
                 _logger.LogCritical(e, "Eventually Consistency Exception at {endpoint}", context.Request.Path); // TODO: Add more details
                 // notify the client that even though they got a good response, the changes didn't take place
                 // due to an unexpected error
+                
+                await transaction.RollbackAsync();
             }
             finally
             {

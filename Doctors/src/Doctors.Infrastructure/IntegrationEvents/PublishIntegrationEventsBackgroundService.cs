@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Diagnostics;
+using System.Text.Json;
 using Doctors.Infrastructure.Persistence;
 using FindADoctor.SharedKernel.IntegrationEvents;
 using Microsoft.Extensions.DependencyInjection;
@@ -69,9 +70,15 @@ public class PublishIntegrationEventsBackgroundService : IHostedService
         {
             var integrationEvent = JsonSerializer.Deserialize<IntegrationEvent>(outboxIntegrationEvent.EventContent);
             integrationEvent.ThrowIfNull();
+
             
+            Dictionary<string, string>? extractedContext = null;
+            
+            if (outboxIntegrationEvent.ActivityExtractedContext is not null)
+                extractedContext = JsonSerializer.Deserialize<Dictionary<string, string>>(outboxIntegrationEvent.ActivityExtractedContext);
+
             _logger.LogInformation("Publishing event of type: {EventType}", integrationEvent.GetType().Name);
-            _integrationEventPublisher.PublishEvent(integrationEvent);
+            _integrationEventPublisher.PublishEvent(integrationEvent, extractedContext);
             _logger.LogInformation("Integration event published successfully");
         });
 
