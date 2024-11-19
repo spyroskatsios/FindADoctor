@@ -50,8 +50,8 @@ public class AppointmentsApiFactory : WebApplicationFactory<IApiMarker>, IAsyncL
     
     public async Task InitializeAsync()
     {
-        InitializeClient();
         await _dbContainer.StartAsync();
+        InitializeClient();
         CreateDatabase();
         await InitializeRespawner();
     }

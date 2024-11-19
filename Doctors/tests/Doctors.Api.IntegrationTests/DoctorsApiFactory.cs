@@ -58,8 +58,8 @@ public class DoctorsApiFactory : WebApplicationFactory<IApiMarker>, IAsyncLifeti
     
     public async Task InitializeAsync()
     {
-        InitializeClient();
         await _dbContainer.StartAsync();
+        InitializeClient();
         CreateDatabase();
         await InitializeRespawner();
     }

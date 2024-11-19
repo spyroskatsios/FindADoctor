@@ -176,7 +176,7 @@ When a doctor deletes an office, the office is deleted (soft delete) in the Doct
 An Integration Event is published, triggering the Appointments Service to delete the office and cancel all related appointments through a Domain Event.
 
 ## Docker Compose
-A Docker Compose file is available in the project root to run RabbitMQ, Jaeger, Grafana and the Open Telemetry Collector.
+A Docker Compose file is available in the project root to run RabbitMQ, Jaeger, Grafana, the Open Telemetry Collector and the databases.
 
 ## Open Telemetry
 The application utilizes OpenTelemetry for comprehensive observability, including distributed tracing, metrics, and logging. 

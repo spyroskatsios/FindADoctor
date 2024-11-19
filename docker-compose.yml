@@ -1,6 +1,7 @@
 services:
   rabbitmq:
     image: rabbitmq:3-management
+    container_name: rabbitmq
     ports:
       - "5672:5672" # RabbitMQ default port
       - "15672:15672" # RabbitMQ management UI
@@ -10,11 +11,13 @@ services:
 
   jaeger:
     image: jaegertracing/all-in-one:1.58.0
+    container_name: jaeger
     ports:
       - "16686:16686" # Jaeger Web UI
         
   prometheus:
     image: prom/prometheus:v2.53.0
+    container_name: prometheus
     ports:
       - "9090:9090"
     volumes:
@@ -26,6 +29,7 @@ services:
         
   grafana:
     image: grafana/grafana:10.4.4
+    container_name: grafana
     volumes:
       - ./grafana-datasources.yml:/etc/grafana/provisioning/datasources/datasources.yml
     environment:
@@ -36,6 +40,7 @@ services:
 
   otel-collector:
     image: otel/opentelemetry-collector-contrib:0.103.0
+    container_name: otel-collector
     volumes:
       - ./otel-collector/otel-collector-config.yml:/etc/otel/config.yaml
       - ./log:/log/otel
@@ -55,6 +60,35 @@ services:
         
   loki:
     image: grafana/loki:2.7.1
+    container_name: loki
     ports:
       - "3100:3100"
     command: -config.file=/etc/loki/local-config.yaml
+    
+  identity-db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: identity-db
+    environment:
+      ACCEPT_EULA: "true"
+      SA_PASSWORD: "EoR_e4463t"
+    ports:
+      - "1433:1433"
+  
+  doctors-db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: doctors-db
+    environment:
+      ACCEPT_EULA: "true"
+      SA_PASSWORD: "EoR_e4463t"
+    ports:
+      - "1434:1433"
+
+        
+  appointments-db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: appointments-db
+    environment:
+      ACCEPT_EULA: "true"
+      SA_PASSWORD: "EoR_e4463t"
+    ports:
+      - "1435:1433"
