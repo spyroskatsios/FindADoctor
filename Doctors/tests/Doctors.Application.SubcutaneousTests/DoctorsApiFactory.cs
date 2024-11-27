@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
@@ -27,8 +28,8 @@ public class DoctorsApiFactory : WebApplicationFactory<IApiMarker>
         builder.ConfigureTestServices(services =>
         {
             services
-                .RemoveAll<DbContextOptions<AppDbContext>>()
-                .AddDbContext<AppDbContext>((sp, options) => options.UseInMemoryDatabase("TestDb"));
+                .RemoveAll<IDbContextOptionsConfiguration<AppDbContext>>()
+                .AddDbContext<AppDbContext>(options => options.UseInMemoryDatabase("TestDb"));
 
             services.RemoveAll<IHostedService>();
 
