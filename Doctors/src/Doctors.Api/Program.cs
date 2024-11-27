@@ -1,4 +1,5 @@
 using Doctors.Api;
+using Doctors.Api.Installers;
 using Doctors.Application;
 using Doctors.Infrastructure;
 using Doctors.Infrastructure.Persistence;

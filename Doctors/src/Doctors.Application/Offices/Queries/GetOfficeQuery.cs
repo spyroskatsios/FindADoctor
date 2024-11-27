@@ -23,7 +23,7 @@ public class GetOfficeHandler : IRequestHandler<GetOfficeQuery, ErrorOr<Office>>
             .FirstOrDefaultAsync(x => x.Id == OfficeId.From(request.OfficeId), cancellationToken);
 
         if (office is null)
-            return Error.NotFound();
+            return Error.NotFound("Office not found");
 
         return office;
     }
