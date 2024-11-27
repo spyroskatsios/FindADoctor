@@ -183,7 +183,9 @@ The application utilizes OpenTelemetry for comprehensive observability, includin
 
 ## GitHub Actions
 
-GitHub Actions are configured to run all tests. Workflows can be found in the `.github/workflows` folder.
+GitHub Actions are configured to just run the tests. Workflows can be found in the `.github/workflows` folder. 
+There is a workflow (PR Verify) that will be triggered every time a pull request to main is opened or updated. 
+There is also a workflow (CI) that will be triggered every time a pull request is merged into the main branch.
 
 ## Postman Collection
 A Postman collection is available in the project root for testing the application.
