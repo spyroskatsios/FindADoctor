@@ -23,7 +23,7 @@ public class GetDoctorQueryHandler : IRequestHandler<GetDoctorQuery, ErrorOr<Doc
     public async Task<ErrorOr<Doctor>> Handle(GetDoctorQuery request, CancellationToken cancellationToken)
     {
         var doctor = await _readDbContext.Doctors.AsNoTracking()
-            .FirstOrDefaultAsync(x=>x.Id.Value == request.DoctorId, cancellationToken);
+            .FirstOrDefaultAsync(x=>x.Id == DoctorId.From(request.DoctorId), cancellationToken);
         
         if(doctor is null)
             return Error.NotFound(description: "Doctor not found");
