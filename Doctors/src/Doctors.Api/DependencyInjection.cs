@@ -1,6 +1,7 @@
 ﻿using Doctors.Api.Installers;
 using Doctors.Api.Services;
 using Doctors.Application.Common.Interfaces;
+using Doctors.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
@@ -22,6 +23,9 @@ public static class DependencyInjection
         services.AddScoped<ICurrentUserService, CurrentUserService>();
         
         services.AddOpenTelemetry(configuration);
+
+        services.AddHealthChecks()
+            .AddDbContextCheck<AppDbContext>();
 
         return services;
     }

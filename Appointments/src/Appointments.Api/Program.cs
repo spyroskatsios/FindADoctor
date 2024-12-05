@@ -1,7 +1,10 @@
+using System.Text.Json;
 using Appointments.Api;
 using Appointments.Application;
+using Appointments.Contracts.Common;
 using Appointments.Infrastructure;
 using Appointments.Infrastructure.Persistence;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
@@ -32,6 +35,18 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+app.MapHealthChecks("/health", new HealthCheckOptions
+{
+    ResponseWriter = async (context, report) =>
+    {
+        context.Response.ContentType = "application/json";
+
+        var response = new HealthCheckResponse(report.Status.ToString(), report.Entries.Select(x => new HealthCheck(x.Value.Status.ToString(),
+            x.Key, x.Value.Description ?? string.Empty)), report.TotalDuration);
+
+        await context.Response.WriteAsync(JsonSerializer.Serialize(response));
+    }
+});
 
 
 app.Run();

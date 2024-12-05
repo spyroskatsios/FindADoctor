@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
@@ -42,6 +43,9 @@ public class CustomExceptionHandler : IExceptionHandler
     public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
     {
         _logger.LogError(exception, "An unhandled exception has occurred");
+        
+        Activity.Current?.SetStatus(ActivityStatusCode.Error);
+        Activity.Current?.AddException(exception);
 
         var problemDetails = new ProblemDetails
         {

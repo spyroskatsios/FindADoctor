@@ -6,7 +6,7 @@ In this "demo" application you can explore concepts and tools like:
 <br/>
 <br/>
 Domain Driven Design, Eventual Consistency, Bounded Contexts, Aggregates, Domain & Integration Events, Clean Architecture, CQRS, Microservices, JWT Authentication with Refresh Tokens, Asynchronous Messaging, 
-RabbitMQ, Open Telemetry, Unit Testing, Integration Testing, Subcutaneous Testing, Test Containers, Jaeger, Loki, Grafana, Prometheus, GitHub Actions and more.
+RabbitMQ, Open Telemetry, Health Checks, Unit Testing, Integration Testing, Subcutaneous Testing, Test Containers, Jaeger, Loki, Grafana, Prometheus, GitHub Actions and more.
 <br/>
 <br/>
 All services are contained within the same solution for easier navigation, but they can be deployed independently.
