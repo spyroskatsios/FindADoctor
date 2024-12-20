@@ -65,30 +65,12 @@ services:
       - "3100:3100"
     command: -config.file=/etc/loki/local-config.yaml
     
-  identity-db:
+  db:
     image: mcr.microsoft.com/mssql/server:2022-latest
-    container_name: identity-db
-    environment:
-      ACCEPT_EULA: "true"
-      SA_PASSWORD: "EoR_e4463t"
-    ports:
-      - "1436:1433"
-  
-  doctors-db:
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    container_name: doctors-db
+    container_name: db
     environment:
       ACCEPT_EULA: "true"
       SA_PASSWORD: "EoR_e4463t"
     ports:
       - "1434:1433"
-
-        
-  appointments-db:
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    container_name: appointments-db
-    environment:
-      ACCEPT_EULA: "true"
-      SA_PASSWORD: "EoR_e4463t"
-    ports:
-      - "1435:1433"
+  
