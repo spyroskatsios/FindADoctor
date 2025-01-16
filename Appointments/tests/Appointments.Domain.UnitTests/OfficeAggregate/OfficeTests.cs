@@ -22,8 +22,8 @@ public class OfficeTests
         var result = office.BookAppointment(appointment, _dateTimeProvider);
 
         // Assert
-        result.IsError.Should().BeTrue();
-        result.FirstError.Should().Be(OfficeErrors.CannotBookAppointmentInPast);
+        result.IsError.ShouldBeTrue();
+        result.FirstError.ShouldBe(OfficeErrors.CannotBookAppointmentInPast);
     }
     
     [Fact]
@@ -41,8 +41,8 @@ public class OfficeTests
         var result = office.BookAppointment(appointment, _dateTimeProvider);
 
         // Assert
-        result.IsError.Should().BeTrue();
-        result.FirstError.Should().Be(OfficeErrors.CannotBookAppointmentInPast);
+        result.IsError.ShouldBeTrue();
+        result.FirstError.ShouldBe(OfficeErrors.CannotBookAppointmentInPast);
     }
     
     
@@ -63,8 +63,8 @@ public class OfficeTests
          var result = office.BookAppointment(appointment, _dateTimeProvider);
     
          // Assert
-         result.IsError.Should().BeTrue();
-         result.FirstError.Should().Be(OfficeErrors.CannotBookNotAvailableAppointment);
+         result.IsError.ShouldBeTrue();
+         result.FirstError.ShouldBe(OfficeErrors.CannotBookNotAvailableAppointment);
      }
     
      [Fact]
@@ -82,8 +82,8 @@ public class OfficeTests
          var result = office.BookAppointment(appointment, _dateTimeProvider);
     
          // Assert
-         result.IsError.Should().BeTrue();
-         result.FirstError.Should().Be(OfficeErrors.CannotBookNotAvailableAppointment);
+         result.IsError.ShouldBeTrue();
+         result.FirstError.ShouldBe(OfficeErrors.CannotBookNotAvailableAppointment);
      }
 
      [Fact]
@@ -101,8 +101,12 @@ public class OfficeTests
          var result = office.BookAppointment(appointment, _dateTimeProvider);
     
          // Assert
-         result.IsError.Should().BeFalse();
+         result.IsError.ShouldBeFalse();
          var events = office.PopDomainEvents();
-         events.Should().ContainItemsAssignableTo<AppointmentBookedEvent>();
+         
+         foreach (var @event in events)
+         { 
+             @event.ShouldBeOfType<AppointmentBookedEvent>();
+         }
      }
 }

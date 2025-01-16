@@ -59,9 +59,9 @@ public class ValidationBehaviorTests
         var result = await _sut.Handle(command, _next, default);
 
         // Assert
-        result.IsError.Should().BeTrue();
-        result.FirstError.Type.Should().Be(ErrorType.Validation);
-        result.FirstError.Code.Should().Be(propertyName);
-        result.FirstError.Description.Should().Be(errorMessage);
+        result.IsError.ShouldBeTrue();
+        result.FirstError.Type.ShouldBe(ErrorType.Validation);
+        result.FirstError.Code.ShouldBe(propertyName);
+        result.FirstError.Description.ShouldBe(errorMessage);
     }
 }

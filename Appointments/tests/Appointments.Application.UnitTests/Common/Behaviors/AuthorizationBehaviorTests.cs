@@ -29,8 +29,8 @@ public class AuthorizationBehaviorTests
         var result = await sut.Handle(command, next, default);
         
         // Assert
-        result.IsError.Should().BeTrue();
-        result.FirstError.Type.Should().Be(ErrorType.Forbidden);
+        result.IsError.ShouldBeTrue();
+        result.FirstError.Type.ShouldBe(ErrorType.Forbidden);
 
     }
     

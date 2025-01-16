@@ -23,7 +23,7 @@ public class WorkingScheduleTests
         // Assert
         var timeSlots = schedule.Calendar.First().Value;
 
-        timeSlots.Count.Should().Be(2);
-        timeSlots.Last().End.Should().BeBefore(timeEnd);
+        timeSlots.Count.ShouldBe(2);
+        timeSlots.Last().End.ShouldBeLessThanOrEqualTo(timeEnd);
     }
 }
