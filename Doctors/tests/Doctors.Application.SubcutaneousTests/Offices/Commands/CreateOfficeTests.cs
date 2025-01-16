@@ -29,8 +29,8 @@ public class CreateOfficeTests
         var result = await _mediator.Send(command);
         
         // Assert
-        result.IsError.Should().BeFalse();
-        result.Value.DoctorId.Value.Should().Be(command.DoctorId);
+        result.IsError.ShouldBeFalse();
+        result.Value.DoctorId.Value.ShouldBe(command.DoctorId);
     }
     
     [Fact]
@@ -45,8 +45,8 @@ public class CreateOfficeTests
         var result = await _mediator.Send(command);
         
         // Assert
-        result.IsError.Should().BeTrue();
-        result.FirstError.Type.Should().Be(ErrorType.Validation);
-        result.FirstError.Code.Should().Be("State");
+        result.IsError.ShouldBeTrue();
+        result.FirstError.Type.ShouldBe(ErrorType.Validation);
+        result.FirstError.Code.ShouldBe("State");
     }
 }

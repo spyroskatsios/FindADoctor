@@ -24,17 +24,17 @@ public class SubscriptionsControllerTests : IAsyncLifetime
         var response = await client.PostAsJsonAsync($"subscriptions", request);
         
         // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.Created);
-        response.Headers.Location.Should().NotBeNull();
+        response.StatusCode.ShouldBe(HttpStatusCode.Created);
+        response.Headers.Location.ShouldNotBeNull();
 
         var subscriptionResponse = await response.Content.ReadFromJsonAsync<SubscriptionResponse>();
-        subscriptionResponse.Should().NotBeNull();
-        subscriptionResponse!.SubscriptionType.Should().Be(request.SubscriptionType);
+        subscriptionResponse.ShouldNotBeNull();
+        subscriptionResponse!.SubscriptionType.ShouldBe(request.SubscriptionType);
 
-        response.Headers.Location!.PathAndQuery.Should().Be($"/subscriptions/{subscriptionResponse.Id}");
+        response.Headers.Location!.PathAndQuery.ShouldBe($"/subscriptions/{subscriptionResponse.Id}");
         
         var subscription = await _doctorsApiFactory.FindAsync<Subscription>(SubscriptionId.From(subscriptionResponse.Id));
-        subscription.Should().NotBeNull();
+        subscription.ShouldNotBeNull();
     }
 
     public SubscriptionsControllerTests(DoctorsApiFactory doctorsApiFactory)

@@ -19,8 +19,8 @@ public class PatientTests
         var result = patient.AddAppointment(appointment);
         
         // Assert
-        result.IsError.Should().BeTrue();
-        result.FirstError.Should().Be(PatientErrors.AppointmentAlreadyExists);
+        result.IsError.ShouldBeTrue();
+        result.FirstError.ShouldBe(PatientErrors.AppointmentAlreadyExists);
     }
     
     [Fact]
@@ -36,7 +36,7 @@ public class PatientTests
         var result = patient.AddAppointment(overlappingAppointment);
         
         // Assert
-        result.IsError.Should().BeTrue();
-        result.FirstError.Should().Be(PatientErrors.AppointmentOverlaps);
+        result.IsError.ShouldBeTrue();
+        result.FirstError.ShouldBe(PatientErrors.AppointmentOverlaps);
     }
 }

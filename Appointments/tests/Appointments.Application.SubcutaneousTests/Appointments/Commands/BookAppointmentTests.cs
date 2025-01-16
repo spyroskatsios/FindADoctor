@@ -35,8 +35,8 @@ public class BookAppointmentTests
         var result = await _mediator.Send(command);
         
         // Assert
-        result.IsError.Should().BeFalse();
-        result.Value.PatientId.Value.Should().Be(command.PatientId);
+        result.IsError.ShouldBeFalse();
+        result.Value.PatientId.Value.ShouldBe(command.PatientId);
     }
     
     [Fact]
@@ -51,8 +51,8 @@ public class BookAppointmentTests
         var result = await _mediator.Send(command);
         
         // Assert
-        result.IsError.Should().BeTrue();
-        result.FirstError.Type.Should().Be(ErrorType.Validation);
-        result.FirstError.Code.Should().Be("DateTime");
+        result.IsError.ShouldBeTrue();
+        result.FirstError.Type.ShouldBe(ErrorType.Validation);
+        result.FirstError.Code.ShouldBe("DateTime");
     }
 }

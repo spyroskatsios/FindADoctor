@@ -29,7 +29,7 @@ public class OfficesControllerTests : IAsyncLifetime
         var response = await client.PostAsJsonAsync($"doctors/{Constants.Doctor.Id.Value}/offices", request);
         
         // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
+        response.StatusCode.ShouldBe(HttpStatusCode.Unauthorized);
     }
     
     
@@ -47,19 +47,19 @@ public class OfficesControllerTests : IAsyncLifetime
         var response = await client.PostAsJsonAsync($"doctors/{Constants.Doctor.Id.Value}/offices", request);
         
         // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.Created);
-        response.Headers.Location.Should().NotBeNull();
+        response.StatusCode.ShouldBe(HttpStatusCode.Created);
+        response.Headers.Location.ShouldNotBeNull();
 
         var officeResponse = await response.Content.ReadFromJsonAsync<OfficeResponse>();
-        officeResponse.Should().NotBeNull();
+        officeResponse.ShouldNotBeNull();
 
-        response.Headers.Location!.PathAndQuery.Should().Be($"/offices/{officeResponse!.Id}");
+        response.Headers.Location!.PathAndQuery.ShouldBe($"/offices/{officeResponse!.Id}");
         
         var office = await _doctorsApiFactory.FindAsync<Office>(OfficeId.From(officeResponse!.Id));
-        office.Should().NotBeNull();
+        office.ShouldNotBeNull();
         
         var doctor = await _doctorsApiFactory.FindAsync<Doctor>(Constants.Doctor.Id);
-        doctor!.OfficeIds.Should().Contain(OfficeId.From(officeResponse.Id));
+        doctor!.OfficeIds.ShouldContain(OfficeId.From(officeResponse.Id));
     }
 
     public Task InitializeAsync()
